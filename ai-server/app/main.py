@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.services.repo_parser import parse_repo
+from app.services.code_chunker import chunk_code
 
 app = FastAPI()
 
@@ -15,3 +16,12 @@ def parse(repo_path: str):
         "files": files[:3]  
     }
 
+@app.post("/chunk-repo")
+def chunk(repo_path: str):
+    files = parse_repo(repo_path)
+    chunks = chunk_code(files)
+
+    return {
+        "total_chunks": len(chunks),
+        "sample": chunks[:5]
+    }
