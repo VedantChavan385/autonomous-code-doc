@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from app.services.repo_parser import parse_repo
 from app.services.code_chunker import chunk_code
 from app.services.embedding import generate_embeddings
+from app.services.vector_store import store_embeddings, query_embeddings
 
 app = FastAPI()
 
@@ -45,3 +46,18 @@ def embed(repo_path: str):
             for e in embeddings[:2]
         ]
     }    
+
+@app.post("/store-repo")
+def store(repo_path: str):
+    files = parse_repo(repo_path)
+    chunks = chunk_code(files)
+    embeddings = generate_embeddings(chunks[:20])  # limit
+
+    store_embeddings(embeddings)
+
+    return {
+        "message": "Embeddings stored successfully",
+        "count": len(embeddings)
+    }
+
+    
