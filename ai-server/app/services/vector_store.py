@@ -7,6 +7,7 @@ client = chromadb.Client()
 collection = client.get_or_create_collection(name="codebase")
 
 def store_embeddings(embedded_data):
+    #STORES EMBEDDINGS IN CHROMA DB
     for i, data in enumerate(embedded_data):
         collection.add(
             ids=[str(i)],
@@ -16,6 +17,7 @@ def store_embeddings(embedded_data):
         )
 
 def query_embeddings(query_embedding, n_results=3):
+    #SERACHES IN CHROMA DB
     results = collection.query(
         query_embeddings=[query_embedding],
         n_results=n_results

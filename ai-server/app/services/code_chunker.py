@@ -1,4 +1,5 @@
 def chunk_code(file_data, chunk_size=500, overlap=50):
+    #SPLITS CODE
     # Breaking into 500 characters with 50 characters overlap
     chunks = []
 

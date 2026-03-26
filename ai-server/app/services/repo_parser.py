@@ -9,6 +9,7 @@ def is_valid_file(file_name):
     return any(file_name.endswith(ext) for ext in SUPPORTED_EXTENSIONS)
 
 def parse_repo(repo_path):
+    #READS ALL FILES
     code_files = []
 
     for root, dirs, files in os.walk(repo_path):

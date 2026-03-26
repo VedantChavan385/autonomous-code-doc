@@ -60,4 +60,16 @@ def store(repo_path: str):
         "count": len(embeddings)
     }
 
-    
+@app.post("/query")
+def query_codebase(question: str):
+    from app.services.embedding import model
+
+    # Convert question → embedding
+    query_embedding = model.encode([question])[0].tolist()
+
+    # Search DB
+    results = query_embeddings(query_embedding)
+
+    return {
+        "results": results
+    }

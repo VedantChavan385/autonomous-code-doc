@@ -4,6 +4,7 @@ from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
 def generate_embeddings(chunks):
+    #CONVERTS CHUNKS INTO VECTORS
     embedded_data = []
 
     # Extract all chunk text
