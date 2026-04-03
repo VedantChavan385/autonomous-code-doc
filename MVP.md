@@ -75,3 +75,8 @@ STEP 9: Frontend
 Upload repo UI
 Documentation viewer
 Chat interface
+
+# to start the server
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
