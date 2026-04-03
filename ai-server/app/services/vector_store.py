@@ -1,27 +1,28 @@
 import chromadb
+import uuid
 
-# Create client (local DB)
-client = chromadb.Client()
+# Create persistent client (data survives restarts)
+client = chromadb.PersistentClient(path="./chroma_db")
 
 # Create / get collection
 collection = client.get_or_create_collection(name="codebase")
 
 def store_embeddings(embedded_data):
     #STORES EMBEDDINGS IN CHROMA DB
-    for i, data in enumerate(embedded_data):
+    for data in embedded_data:
         collection.add(
-            ids=[str(i)],
+            ids=[str(uuid.uuid4())],   # unique ID per chunk to avoid overwrites
             embeddings=[data["embedding"]],
             documents=[data["chunk"]],
             metadatas=[{"file_path": data["file_path"]}]
         )
 
 def query_embeddings(query_embedding, n_results=3):
-    #SERACHES IN CHROMA DB
+    #SEARCHES IN CHROMA DB
     results = collection.query(
         query_embeddings=[query_embedding],
         n_results=n_results
-        #most similar chunk will be find out
+        #most similar chunk will be found
     )
 
     return results

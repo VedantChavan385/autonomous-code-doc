@@ -1,4 +1,10 @@
-import ollama
+import os
+from google import genai
+from dotenv import load_dotenv
+
+load_dotenv()
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def generate_answer(question, chunks):
     context = "\n\n".join(chunks)
@@ -17,11 +23,11 @@ Question:
 Answer clearly:
 """
 
-    response = ollama.chat(
-        model='llama3',
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
-
-    return response['message']['content']
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
+        return response.text
+    except Exception as e:
+        return f"[LLM Error] {str(e)}"

@@ -32,6 +32,5 @@ def parse_repo(repo_path):
                 except Exception as e:
                     print(f"Error reading {file_path}: {e}")
 
-    return code_files
-
     #input for chunking and embeddings
+    return code_files

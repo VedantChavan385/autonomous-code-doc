@@ -1,8 +1,14 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+**/__pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Vector database (generated data, not source)
+chroma_db/
+*.sqlite3
+*.bin
 
 # Dependencies
 venv/

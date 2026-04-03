@@ -5,7 +5,7 @@ pydantic-settings
 python-dotenv
 langchain
 langchain-community
-langchain-google-genai
+google-genai
 chromadb
 tree-sitter
 GitPython
