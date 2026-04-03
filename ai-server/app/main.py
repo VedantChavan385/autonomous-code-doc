@@ -3,6 +3,7 @@ from app.services.repo_parser import parse_repo
 from app.services.code_chunker import chunk_code
 from app.services.embedding import generate_embeddings
 from app.services.vector_store import store_embeddings, query_embeddings
+from app.services.rag_pipeline import run_rag_pipeline
 
 app = FastAPI()
 
@@ -73,3 +74,8 @@ def query_codebase(question: str):
     return {
         "results": results
     }
+
+@app.post("/rag-test")
+def rag_test(question: str):
+    result = run_rag_pipeline(question)
+    return result
