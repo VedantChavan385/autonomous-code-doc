@@ -1,10 +1,8 @@
-import os
-from google import genai
-from dotenv import load_dotenv
+from groq import Groq
+from app.config import settings
 
-load_dotenv()
-
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+# Initialize Groq client
+client = Groq(api_key=settings.groq_api_key)
 
 def generate_answer(question, chunks):
     context = "\n\n".join(chunks)
@@ -24,10 +22,11 @@ Answer clearly:
 """
 
     try:
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
+        response = client.chat.completions.create(
+            model=settings.llm_model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.3
         )
-        return response.text
+        return response.choices[0].message.content
     except Exception as e:
         return f"[LLM Error] {str(e)}"

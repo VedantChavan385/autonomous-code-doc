@@ -1,24 +1,38 @@
 from sentence_transformers import SentenceTransformer
+import logging
 
-# Load model once (IMPORTANT)
+logger = logging.getLogger(__name__)
+
+# Load model once
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
 def generate_embeddings(chunks):
-    #CONVERTS CHUNKS INTO VECTORS
+    """
+    CONVERTS CHUNKS INTO VECTORS using local Sentence Transformers
+    (Bypassing Gemini API to avoid free-tier quota/access errors)
+    """
     embedded_data = []
-
-    # Extract all chunk text
     texts = [chunk["chunk"] for chunk in chunks]
 
-    # Generate embeddings in one go (FAST ⚡)
-    embeddings = model.encode(texts)
+    if not texts:
+        return []
 
-    # Combine with metadata
-    for i, chunk in enumerate(chunks):
-        embedded_data.append({
-            "file_path": chunk["file_path"],
-            "chunk": chunk["chunk"],
-            "embedding": embeddings[i].tolist()
-        })
+    try:
+        logger.info(f"Generating embeddings for {len(texts)} chunks via local model...")
+        
+        # Generate embeddings in one go locally
+        embeddings = model.encode(texts)
+        
+        for i, chunk in enumerate(chunks):
+            embedded_data.append({
+                "file_path": chunk["file_path"],
+                "chunk": chunk["chunk"],
+                "embedding": embeddings[i].tolist()
+            })
 
-    return embedded_data
+        logger.info("Embeddings successfully generated.")
+        return embedded_data
+        
+    except Exception as e:
+        logger.error(f"Error generating embeddings: {str(e)}")
+        raise e
