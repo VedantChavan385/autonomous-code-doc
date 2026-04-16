@@ -9,10 +9,10 @@ An AI-powered system that analyzes GitHub repositories, generates documentation 
 ```mermaid
 graph TB
     subgraph "Client Layer"
-        FE["React Frontend<br/>(Vite + TypeScript + Tailwind)"]
+        FE["React Frontend<br/>(Vite + JavaScript + Tailwind)"]
     end
     subgraph "Application Layer"
-        BE["Node.js Backend<br/>(Express + TypeScript)"]
+        BE["Node.js Backend<br/>(Express + JavaScript)"]
         QUEUE["Job Queue<br/>(BullMQ + Redis)"]
     end
     subgraph "AI Layer"
@@ -136,49 +136,48 @@ ai-server/
 ```
 backend/
 ├── src/
-│   ├── app.ts                  # Express app setup
-│   ├── server.ts               # HTTP server entry
+│   ├── app.js                  # Express app setup
+│   ├── server.js               # HTTP server entry
 │   ├── config/
-│   │   ├── index.ts            # Env config loader
-│   │   └── db.ts               # MongoDB connection
+│   │   ├── index.js            # Env config loader
+│   │   └── db.js               # MongoDB connection
 │   ├── middleware/
-│   │   ├── auth.ts             # JWT verification
-│   │   ├── errorHandler.ts     # Global error handler
-│   │   ├── rateLimiter.ts      # Rate limiting
-│   │   └── validate.ts         # Request validation (Zod)
+│   │   ├── auth.js             # JWT verification
+│   │   ├── errorHandler.js     # Global error handler
+│   │   ├── rateLimiter.js      # Rate limiting
+│   │   └── validate.js         # Request validation (using standard JS)
 │   ├── modules/
 │   │   ├── auth/
-│   │   │   ├── auth.controller.ts
-│   │   │   ├── auth.service.ts
-│   │   │   ├── auth.routes.ts
-│   │   │   └── auth.validation.ts
+│   │   │   ├── auth.controller.js
+│   │   │   ├── auth.service.js
+│   │   │   ├── auth.routes.js
+│   │   │   └── auth.validation.js
 │   │   ├── project/
-│   │   │   ├── project.controller.ts
-│   │   │   ├── project.service.ts
-│   │   │   ├── project.model.ts    # Mongoose schema
-│   │   │   ├── project.routes.ts
-│   │   │   └── project.validation.ts
+│   │   │   ├── project.controller.js
+│   │   │   ├── project.service.js
+│   │   │   ├── project.model.js    # Mongoose schema
+│   │   │   ├── project.routes.js
+│   │   │   └── project.validation.js
 │   │   ├── chat/
-│   │   │   ├── chat.controller.ts
-│   │   │   ├── chat.service.ts
-│   │   │   ├── chat.model.ts
-│   │   │   ├── chat.routes.ts
-│   │   │   └── chat.validation.ts
+│   │   │   ├── chat.controller.js
+│   │   │   ├── chat.service.js
+│   │   │   ├── chat.model.js
+│   │   │   ├── chat.routes.js
+│   │   │   └── chat.validation.js
 │   │   └── user/
-│   │       ├── user.model.ts
-│   │       └── user.service.ts
+│   │       ├── user.model.js
+│   │       └── user.service.js
 │   ├── jobs/
-│   │   ├── queue.ts            # BullMQ queue setup
-│   │   └── processRepo.job.ts  # Repo processing worker
+│   │   ├── queue.js            # BullMQ queue setup
+│   │   └── processRepo.job.js  # Repo processing worker
 │   ├── socket/
-│   │   └── index.ts            # Socket.IO for real-time updates
+│   │   └── index.js            # Socket.IO for real-time updates
 │   └── utils/
-│       └── logger.ts           # Winston logger
+│       └── logger.js           # Winston logger
 ├── tests/
-│   ├── auth.test.ts
-│   └── project.test.ts
+│   ├── auth.test.js
+│   └── project.test.js
 ├── package.json
-├── tsconfig.json
 ├── Dockerfile
 └── .env.example
 ```
@@ -189,48 +188,45 @@ backend/
 frontend/
 ├── public/
 ├── src/
-│   ├── main.tsx
-│   ├── App.tsx
+│   ├── main.jsx
+│   ├── App.jsx
 │   ├── index.css               # Global styles + Tailwind directives
 │   ├── api/
-│   │   ├── client.ts           # Axios instance with interceptors
-│   │   ├── auth.api.ts
-│   │   ├── project.api.ts
-│   │   └── chat.api.ts
+│   │   ├── client.js           # Axios instance with interceptors
+│   │   ├── auth.api.js
+│   │   ├── project.api.js
+│   │   └── chat.api.js
 │   ├── components/
 │   │   ├── ui/                 # Reusable primitives (Button, Input, Card...)
 │   │   ├── layout/
-│   │   │   ├── Sidebar.tsx
-│   │   │   ├── Header.tsx
-│   │   │   └── DashboardLayout.tsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   ├── Header.jsx
+│   │   │   └── DashboardLayout.jsx
 │   │   ├── chat/
-│   │   │   ├── ChatWindow.tsx
-│   │   │   ├── MessageBubble.tsx
-│   │   │   └── ChatInput.tsx
+│   │   │   ├── ChatWindow.jsx
+│   │   │   ├── MessageBubble.jsx
+│   │   │   └── ChatInput.jsx
 │   │   └── docs/
-│   │       ├── DocViewer.tsx
-│   │       └── FileTree.tsx
+│   │       ├── DocViewer.jsx
+│   │       └── FileTree.jsx
 │   ├── pages/
-│   │   ├── Login.tsx
-│   │   ├── Register.tsx
-│   │   ├── Dashboard.tsx
-│   │   ├── ProjectDetail.tsx
-│   │   ├── ChatPage.tsx
-│   │   └── DocsPage.tsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── ProjectDetail.jsx
+│   │   ├── ChatPage.jsx
+│   │   └── DocsPage.jsx
 │   ├── hooks/
-│   │   ├── useAuth.ts
-│   │   ├── useSocket.ts
-│   │   └── useProject.ts
+│   │   ├── useAuth.js
+│   │   ├── useSocket.js
+│   │   └── useProject.js
 │   ├── store/
-│   │   └── authStore.ts        # Zustand store
-│   ├── types/
-│   │   └── index.ts
+│   │   └── authStore.js        # Zustand store
 │   └── utils/
-│       └── constants.ts
+│       └── constants.js
 ├── package.json
-├── tailwind.config.ts
-├── vite.config.ts
-├── tsconfig.json
+├── tailwind.config.js
+├── vite.config.js
 ├── Dockerfile
 └── .env.example
 ```
@@ -327,15 +323,8 @@ frontend/
 {
   "repo_url": "https://github.com/user/repo",
   "project_id": "abc123",
-  "file_extensions": [".js", ".ts", ".py", ".jsx", ".tsx"]
-}
-// Response
-{
-  "status": "success",
-  "file_count": 42,
-  "chunk_count": 187,
-  "collection_id": "proj_abc123",
-  "primary_language": "TypeScript"
+  "file_extensions": [".js", ".py", ".jsx", ".tsx"],
+  "primary_language": "JavaScript"
 }
 ```
 
@@ -351,7 +340,7 @@ frontend/
 {
   "answer": "Authentication uses JWT tokens...",
   "sources": [
-    {"file": "src/auth/login.ts", "line": 12, "snippet": "..."}
+    {"file": "src/auth/login.js", "line": 12, "snippet": "..."}
   ]
 }
 ```
@@ -521,7 +510,7 @@ VITE_WS_URL=http://localhost:5000
 8. Wire up API routes + write unit tests
 
 ### Phase 2 — Backend (Week 2)
-1. Scaffold Express + TypeScript + MongoDB connection
+1. Scaffold Express + JavaScript + MongoDB connection
 2. Auth module (register, login, JWT middleware)
 3. Project module (CRUD, status tracking)
 4. Chat module (send message, get history)
@@ -530,7 +519,7 @@ VITE_WS_URL=http://localhost:5000
 7. Write integration tests
 
 ### Phase 3 — Frontend (Week 3)
-1. Scaffold Vite + React + TS + Tailwind
+1. Scaffold Vite + React + JS + Tailwind
 2. Routing, API client, auth store (Zustand)
 3. Auth pages + Dashboard + upload form
 4. Documentation Viewer + Chat page
@@ -559,8 +548,8 @@ cd ai-server && pip install -r requirements.txt && pytest tests/ -v
 ```bash
 cd backend && npm install && npm test
 ```
-- `auth.test.ts` — register, login, JWT validation flows
-- `project.test.ts` — CRUD, status transitions
+- `auth.test.js` — register, login, JWT validation flows
+- `project.test.js` — CRUD, status transitions
 
 ### Integration Testing
 1. `docker-compose up` all services

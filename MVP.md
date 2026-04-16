@@ -7,7 +7,7 @@
 - Accept GitHub URL or ZIP
 
 ### 2. Code Parsing
-- Extract .js, .py, .ts files
+- Extract .js, .py, .jsx, .jsx files (and more)
 
 ### 3. Documentation Generation
 - Summarize modules and functions

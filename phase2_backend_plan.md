@@ -1,4 +1,4 @@
-# Phase 2: Backend (Express + TypeScript + MongoDB)
+# Phase 2: Backend (Express + JavaScript + MongoDB)
 
 ## Overview
 The Express backend sits between the React frontend and the FastAPI AI Server.
@@ -24,7 +24,7 @@ ChromaDB + Groq LLM
 |---------------|--------------------------------------------|
 | Node.js       | Runtime                                    |
 | Express       | HTTP web framework                         |
-| TypeScript    | Type safety across the entire codebase     |
+| JavaScript    | Standard programming language              |
 | MongoDB       | Stores users, projects, chat history       |
 | Mongoose      | MongoDB ORM / schema modeling              |
 | BullMQ        | Redis-backed job queue for async processing|
@@ -41,49 +41,48 @@ ChromaDB + Groq LLM
 ```
 backend/
 ├── src/
-│   ├── app.ts                   # Express app setup
-│   ├── server.ts                # HTTP server entry
+│   ├── app.js                   # Express app setup
+│   ├── server.js                # HTTP server entry
 │   ├── config/
-│   │   ├── index.ts             # Env config loader
-│   │   └── db.ts                # MongoDB connection
+│   │   ├── index.js             # Env config loader
+│   │   └── db.js                # MongoDB connection
 │   ├── middleware/
-│   │   ├── auth.ts              # JWT verification
-│   │   ├── errorHandler.ts      # Global error handler
-│   │   ├── rateLimiter.ts       # Rate limiting
-│   │   └── validate.ts          # Zod request validation
+│   │   ├── auth.js              # JWT verification
+│   │   ├── errorHandler.js      # Global error handler
+│   │   ├── rateLimiter.js       # Rate limiting
+│   │   └── validate.js          # Zod request validation
 │   ├── modules/
 │   │   ├── auth/
-│   │   │   ├── auth.controller.ts
-│   │   │   ├── auth.service.ts
-│   │   │   ├── auth.routes.ts
-│   │   │   └── auth.validation.ts
+│   │   │   ├── auth.controller.js
+│   │   │   ├── auth.service.js
+│   │   │   ├── auth.routes.js
+│   │   │   └── auth.validation.js
 │   │   ├── project/
-│   │   │   ├── project.controller.ts
-│   │   │   ├── project.service.ts
-│   │   │   ├── project.model.ts      # Mongoose schema
-│   │   │   ├── project.routes.ts
-│   │   │   └── project.validation.ts
+│   │   │   ├── project.controller.js
+│   │   │   ├── project.service.js
+│   │   │   ├── project.model.js      # Mongoose schema
+│   │   │   ├── project.routes.js
+│   │   │   └── project.validation.js
 │   │   ├── chat/
-│   │   │   ├── chat.controller.ts
-│   │   │   ├── chat.service.ts
-│   │   │   ├── chat.model.ts
-│   │   │   ├── chat.routes.ts
-│   │   │   └── chat.validation.ts
+│   │   │   ├── chat.controller.js
+│   │   │   ├── chat.service.js
+│   │   │   ├── chat.model.js
+│   │   │   ├── chat.routes.js
+│   │   │   └── chat.validation.js
 │   │   └── user/
-│   │       ├── user.model.ts
-│   │       └── user.service.ts
+│   │       ├── user.model.js
+│   │       └── user.service.js
 │   ├── jobs/
-│   │   ├── queue.ts             # BullMQ queue setup
-│   │   └── processRepo.job.ts   # Repo processing worker
+│   │   ├── queue.js             # BullMQ queue setup
+│   │   └── processRepo.job.js   # Repo processing worker
 │   ├── socket/
-│   │   └── index.ts             # Socket.IO for real-time updates
+│   │   └── index.js             # Socket.IO for real-time updates
 │   └── utils/
-│       └── logger.ts            # Winston logger
+│       └── logger.js            # Winston logger
 ├── tests/
-│   ├── auth.test.ts
-│   └── project.test.ts
+│   ├── auth.test.js
+│   └── project.test.js
 ├── package.json
-├── tsconfig.json
 └── .env.example
 ```
 
@@ -152,10 +151,9 @@ backend/
 ### Step 1 - Scaffold
 ```bash
 mkdir backend && cd backend
-npx -y create-tsconfig               # or tsc --init
 npm init -y
 npm install express mongoose bullmq ioredis socket.io jsonwebtoken bcryptjs axios zod winston
-npm install -D typescript ts-node nodemon @types/express @types/node @types/jsonwebtoken @types/bcryptjs
+npm install -D nodemon
 ```
 
 ### Step 2 - Auth Module
@@ -172,8 +170,8 @@ npm install -D typescript ts-node nodemon @types/express @types/node @types/json
 - Saves question + answer + sources to `chatSessions` collection in MongoDB
 
 ### Step 5 - BullMQ Job Queue (Key Piece!)
-- `queue.ts` sets up a Redis-backed BullMQ queue named `"repo-processing"`
-- `processRepo.job.ts` is a worker that picks up jobs, calls `POST /process-repo` on the AI Server, and updates the project status in MongoDB
+- `queue.js` sets up a Redis-backed BullMQ queue named `"repo-processing"`
+- `processRepo.job.js` is a worker that picks up jobs, calls `POST /process-repo` on the AI Server, and updates the project status in MongoDB
 
 ### Step 6 - Socket.IO
 - When the worker completes (success or failure), it emits a WebSocket event to the user's browser

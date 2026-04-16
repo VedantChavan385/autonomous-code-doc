@@ -38,7 +38,7 @@ Vector DB + LLM APIs
 
 ### Frontend
 - React
-- TypeScript
+- JavaScript
 - Tailwind
 
 ### Backend (App Layer)
