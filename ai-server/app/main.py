@@ -3,7 +3,7 @@ from app.services.repo_cloner import clone_repository, cleanup_repository
 from app.services.repo_parser import parse_repo
 from app.services.code_chunker import chunk_code
 from app.services.embedding import generate_embeddings
-from app.services.vector_store import store_embeddings, query_embeddings
+from app.services.vector_store import store_embeddings, delete_collection
 from app.services.rag_pipeline import run_rag_pipeline
 from app.models.schemas import ProcessRepoRequest, ProcessRepoResponse, QueryRequest, QueryResponse
 from app.config import settings
@@ -18,6 +18,14 @@ app = FastAPI(title=settings.app_name)
 @app.get("/")
 def root():
     return {"message": "AI Server Running 🚀"}
+
+@app.get("/health")
+def health_check():
+    """
+    Simple health check endpoint.
+    The backend will ping this before sending any work to confirm the AI server is alive.
+    """
+    return {"status": "ok", "service": settings.app_name}
 
 @app.post("/process-repo", response_model=ProcessRepoResponse)
 def process_repo(request: ProcessRepoRequest):
@@ -42,14 +50,14 @@ def process_repo(request: ProcessRepoRequest):
         # Step 4: Embed
         embeddings = generate_embeddings(chunks)
         
-        # Step 5: Store
-        store_embeddings(embeddings)
+        # Step 5: Store — pass project_id so chunks go into the right collection
+        store_embeddings(embeddings, project_id=request.project_id)
         
         return ProcessRepoResponse(
             status="success",
             file_count=len(files),
             chunk_count=len(chunks),
-            collection_id="codebase", # Currently using a generic collection in vector store
+            collection_id=request.project_id,  # The actual ChromaDB collection name for this project
             message="Repository successfully processed and stored."
         )
         
@@ -67,8 +75,13 @@ def query_endpoint(request: QueryRequest):
     Queries the codebase and returns an answer along with sources.
     """
     try:
-        # run_rag_pipeline handles embedding query -> retrieving -> answering
-        result = run_rag_pipeline(request.question)
+        # Pass project_id so we search the right collection
+        # Pass top_k so the user can control how many code chunks the LLM sees
+        result = run_rag_pipeline(
+            question=request.question,
+            project_id=request.project_id,
+            top_k=request.top_k
+        )
         
         # Format the sources list and answer
         sources = []
@@ -83,10 +96,14 @@ def query_endpoint(request: QueryRequest):
         logger.error(f"Query failed: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/rag-test")
-def rag_test(question: str):
+@app.delete("/collections/{project_id}")
+def delete_project_collection(project_id: str):
     """
-    Legacy testing endpoint without strong typing
+    Deletes the vector embeddings for a given project from ChromaDB.
+    Called when a user deletes their project from the backend.
     """
-    result = run_rag_pipeline(question)
-    return result
+    try:
+        delete_collection(project_id)
+        return {"status": "success", "message": f"Collection for project '{project_id}' deleted."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
