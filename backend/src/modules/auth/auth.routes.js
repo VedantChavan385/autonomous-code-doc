@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/me', protect, getMe);  // protect runs FIRST (checks token), then getMe runs
+router.get('/me', protect, getMe);
 
 export default router;

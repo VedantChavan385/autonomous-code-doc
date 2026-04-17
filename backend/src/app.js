@@ -1,16 +1,17 @@
 import express from 'express';
 import cors from 'cors';
 
-// Import our newly created routes
+// Import routes
 import authRoutes from './modules/auth/auth.routes.js';
+import projectRoutes from './modules/project/project.routes.js';
 
 const app = express();
 
-// Middleware: Basic setup
-app.use(express.json()); // Allow the server to understand JSON data in the request body
-app.use(cors());         // Allow the frontend to communicate with this backend
+// Middleware
+app.use(express.json());
+app.use(cors());
 
-// Hello World Route (Health Check)
+// Hello World / Health Check
 app.get('/', (req, res) => {
   res.json({ message: "Welcome to the Autonomous Codebase Documentor API! 🚀" });
 });
@@ -18,9 +19,7 @@ app.get('/', (req, res) => {
 // ==========================================
 // 🔌 API Routes
 // ==========================================
-
-// This means that the POST '/register' inside authRoutes will actually become POST '/api/auth/register'
 app.use('/api/auth', authRoutes);
-
+app.use('/api/projects', projectRoutes);
 
 export default app;
