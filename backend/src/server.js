@@ -1,18 +1,17 @@
 import app from './app.js';
-import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import config from './config/index.js';
 
-// Load environment variables from .env file
-dotenv.config();
+// 1. Connect to MongoDB
+connectDB();
 
-const PORT = process.env.PORT || 5000;
-
-// Start the server
-app.listen(PORT, () => {
+// 2. Start the Express server
+app.listen(config.port, () => {
     console.log(`
     =========================================
     🚀 Backend Server is running!
-    📡 URL: http://localhost:${PORT}
-    🛠️  Mode: Development
+    📡 URL: http://localhost:${config.port}
+    🛠️  Mode: ${config.nodeEnv}
     =========================================
     `);
 });
