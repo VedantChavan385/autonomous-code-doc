@@ -31,16 +31,15 @@ const userSchema = new mongoose.Schema(
 );
 
 // Hash the password right before saving the user document
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
   // If the password hasn't been modified, skip hashing
   if (!this.isModified('passwordHash')) {
-    next();
+    return;
   }
 
   // Generate a salt with 12 rounds (higher = more secure but slower)
   const salt = await bcrypt.genSalt(12);
   this.passwordHash = await bcrypt.hash(this.passwordHash, salt);
-  next();
 });
 
 // Helper method to check if an entered password matches the hashed password in the DB
