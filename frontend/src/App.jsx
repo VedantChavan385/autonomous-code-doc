@@ -34,13 +34,21 @@ function App() {
     <BrowserRouter>
       {/* Toast notifications configuration */}
       <Toaster 
-        position="top-right"
+        position="bottom-right"
         toastOptions={{
           style: {
-            background: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(10px)',
-            color: '#fff',
-            border: '1px solid rgba(255,255,255,0.1)'
+            background: '#ffffff',
+            color: '#1a1a1a',
+            border: '3px solid #1a1a1a',
+            borderRadius: '1rem',
+            boxShadow: '6px 6px 0px rgba(0,0,0,0.15)',
+            fontWeight: 'bold',
+            fontSize: '13px',
+            padding: '12px 20px',
+          },
+          iconTheme: {
+            primary: '#1a1a1a',
+            secondary: '#ffffff',
           }
         }}
       />
