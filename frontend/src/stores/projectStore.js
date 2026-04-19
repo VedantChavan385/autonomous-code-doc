@@ -6,6 +6,9 @@ export const useProjectStore = create((set, get) => ({
   selectedProject: null,
   isLoading: false,
   error: null,
+  searchQuery: "",
+  
+  setSearchQuery: (query) => set({ searchQuery: query }),
 
   fetchProjects: async () => {
     set({ isLoading: true, error: null });

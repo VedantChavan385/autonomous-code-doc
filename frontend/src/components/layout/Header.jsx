@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Bell, User } from 'lucide-react';
+import { useProjectStore } from '../../stores/projectStore';
 
 export function Header() {
+  const { searchQuery, setSearchQuery } = useProjectStore();
   return (
     <header className="h-16 border-b border-white/5 bg-slate-900/40 backdrop-blur-md sticky top-0 z-10">
       <div className="h-full px-8 flex items-center justify-between">
@@ -10,6 +12,8 @@ export function Header() {
           <input 
             type="text" 
             placeholder="Search projects..." 
+            value={searchQuery || ''}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-white/5 border border-white/5 rounded-full pl-10 pr-4 py-2 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-accent-end transition-all"
           />
         </div>

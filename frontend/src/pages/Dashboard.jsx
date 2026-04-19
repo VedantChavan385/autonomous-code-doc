@@ -10,7 +10,11 @@ import { useProjectStore } from '../stores/projectStore';
 
 export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { projects, isLoading, fetchProjects } = useProjectStore();
+  const { projects, isLoading, fetchProjects, searchQuery } = useProjectStore();
+
+  const filteredProjects = projects.filter(p => 
+    p.name.toLowerCase().includes((searchQuery || '').toLowerCase())
+  );
 
   useEffect(() => {
     fetchProjects();
@@ -45,8 +49,8 @@ export default function Dashboard() {
         <div className="flex items-center justify-center py-32">
           <Spinner size="lg" />
         </div>
-      ) : projects.length > 0 ? (
-        <ProjectGrid projects={projects} />
+      ) : filteredProjects.length > 0 ? (
+        <ProjectGrid projects={filteredProjects} />
       ) : (
         <EmptyState onAdd={() => setIsModalOpen(true)} />
       )}

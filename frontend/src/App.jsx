@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import ProjectDetail from './pages/ProjectDetail';
 import ChatPage from './pages/ChatPage';
 import DocsPage from './pages/DocsPage';
+import Settings from './pages/Settings';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useAuthStore } from './stores/authStore';
 import { authApi } from './api/auth.api';
@@ -54,6 +55,7 @@ function App() {
         <Route path="/projects/:id" element={<ProtectedRoute><ProjectDetail /></ProtectedRoute>} />
         <Route path="/projects/:id/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
         <Route path="/projects/:id/docs" element={<ProtectedRoute><DocsPage /></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         
         {/* Catch-all redirect */}
         <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
