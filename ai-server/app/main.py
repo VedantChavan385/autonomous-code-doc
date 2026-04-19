@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from app.services.repo_cloner import clone_repository, cleanup_repository
-from app.services.repo_parser import parse_repo
+from app.services.repo_parser import parse_repo, detect_language
 from app.services.code_chunker import chunk_code
 from app.services.embedding import generate_embeddings
 from app.services.vector_store import store_embeddings, delete_collection
@@ -19,6 +19,32 @@ app = FastAPI(title=settings.app_name)
 @app.get("/")
 def root():
     return {"message": "AI Server Running 🚀"}
+
+
+@app.get("/status")
+def get_service_status():
+    """
+    Returns the status of the AI server and its connection to Groq.
+    """
+    try:
+        # Try a tiny completion to verify the key
+        client.chat.completions.create(
+            model=settings.llm_model,
+            messages=[{"role": "user", "content": "ping"}],
+            max_tokens=1
+        )
+        return {
+            "status": "online",
+            "groq_connection": "active",
+            "credits_type": "Beta / Unlimited (Rate Limited)",
+            "model": settings.llm_model
+        }
+    except Exception as e:
+        return {
+            "status": "online",
+            "groq_connection": "error",
+            "error_detail": str(e)
+        }
 
 @app.get("/health")
 def health_check():
@@ -54,11 +80,15 @@ def process_repo(request: ProcessRepoRequest):
         # Step 5: Store — pass project_id so chunks go into the right collection
         store_embeddings(embeddings, project_id=request.project_id)
         
+        # Step 6: Detect Primary Language
+        primary_lang = detect_language(files)
+        
         return ProcessRepoResponse(
             status="success",
             file_count=len(files),
             chunk_count=len(chunks),
-            collection_id=request.project_id,  # The actual ChromaDB collection name for this project
+            collection_id=request.project_id,
+            language=primary_lang,
             message="Repository successfully processed and stored."
         )
         

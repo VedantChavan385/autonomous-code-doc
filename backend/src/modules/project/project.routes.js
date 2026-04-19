@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProject, getMyProjects, getProject, deleteProject, getDocs, generateDocs } from './project.controller.js';
+import { createProject, getMyProjects, getProject, deleteProject, getDocs, generateDocs, getSystemStatus } from './project.controller.js';
 import { protect } from '../../middleware/auth.js';
 import { validate } from '../../middleware/validate.js';
 import { createProjectSchema } from './project.validation.js';
@@ -11,6 +11,7 @@ router.get('/', protect, getMyProjects);
 router.get('/:id', protect, getProject);
 router.delete('/:id', protect, deleteProject);
 router.get('/:id/docs', protect, getDocs);
+router.get('/system/status', protect, getSystemStatus);
 router.post('/:id/docs/generate', protect, generateDocs);
 
 export default router;

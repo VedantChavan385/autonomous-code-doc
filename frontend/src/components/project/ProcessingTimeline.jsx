@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Circle, Clock, Loader2 } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, Loader2, X } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 export function ProcessingTimeline({ status }) {

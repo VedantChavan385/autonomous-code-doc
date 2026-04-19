@@ -24,6 +24,7 @@ const projectSchema = new mongoose.Schema(
     },
     fileCount: { type: Number, default: 0 },
     chunkCount: { type: Number, default: 0 },
+    language: { type: String, default: null },
     errorMessage: { type: String, default: null },
     chromaCollection: { type: String, default: null },
   },

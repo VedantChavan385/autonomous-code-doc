@@ -14,6 +14,7 @@ class ProcessRepoResponse(BaseModel):
     file_count: int
     chunk_count: int
     collection_id: str
+    language: str
     message: str
 
 class QueryRequest(BaseModel):

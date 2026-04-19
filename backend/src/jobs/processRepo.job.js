@@ -24,6 +24,7 @@ const worker = new Worker('repo-processing', async (job) => {
       status: 'ready',
       fileCount: aiData.file_count,
       chunkCount: aiData.chunk_count,
+      language: aiData.language,
       chromaCollection: aiData.collection_id,
     });
 

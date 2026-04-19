@@ -13,7 +13,7 @@ export function FileTree({ tree = [], onFileSelect, activeFile }) {
 
   const renderNode = (node, depth = 0) => {
     const isFolder = node.type === 'folder';
-    const isActive = activeFile === node.name;
+    const isActive = activeFile === node.path;
 
     return (
       <div key={node.name} style={{ paddingLeft: `${depth * 12}px` }}>

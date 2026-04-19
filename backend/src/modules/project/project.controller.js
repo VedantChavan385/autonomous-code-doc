@@ -132,3 +132,18 @@ export const generateDocs = async (req, res) => {
     res.status(500).json({ message: 'Failed to communicate with AI Server or generate docs ' + (error.response?.data?.detail || '') });
   }
 };
+
+// @desc    Get AI Server status and Groq credits info
+// @route   GET /api/projects/system/status
+export const getSystemStatus = async (req, res) => {
+  try {
+    const response = await axios.get(`${config.aiServerUrl}/status`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ 
+      status: 'offline', 
+      message: 'AI Server is unreachable',
+      error: error.message 
+    });
+  }
+};

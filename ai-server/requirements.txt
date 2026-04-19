@@ -7,6 +7,8 @@ python-dotenv==1.0.0
 chromadb==0.4.22
 GitPython==3.1.41
 python-multipart==0.0.6
-sentence-transformers==2.2.2
-groq==0.4.2
+sentence-transformers>=3.0.0
+groq>=0.5.0
 typing-extensions==4.9.0
+huggingface-hub>=0.17.0
+posthog<3.0.0
