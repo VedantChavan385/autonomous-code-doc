@@ -14,6 +14,7 @@ import toast from 'react-hot-toast';
 import { MessageBubble } from '../components/chat/MessageBubble';
 import { ChatInput } from '../components/chat/ChatInput';
 import { Spinner } from '../components/ui/Spinner';
+import { Button } from '../components/ui/Button';
 import { useChatStore } from '../stores/chatStore';
 import { useProjectStore } from '../stores/projectStore';
 import { useSocket } from '../hooks/useSocket';

@@ -53,7 +53,7 @@ export const useChatStore = create((set, get) => ({
       const history = await chatApi.getHistory(projectId);
       // History from backend is usually an array of sessions, 
       // but if we only support one session per project for now:
-      const messages = history[0]?.messages || [];
+      const messages = history || [];
       set({ messages, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });

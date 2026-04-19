@@ -23,9 +23,11 @@ export const registerUser = async (req, res) => {
     // 3. Send back the secure token and basic user info
     if (user) {
       res.status(201).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+        },
         token: generateToken(user._id),
       });
     } else {
@@ -48,9 +50,11 @@ export const loginUser = async (req, res) => {
     // 2. Check if user exists AND password matches
     if (user && (await user.matchPassword(password))) {
       res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+        },
         token: generateToken(user._id),
       });
     } else {
@@ -66,8 +70,10 @@ export const loginUser = async (req, res) => {
 export const getMe = async (req, res) => {
   // req.user was already set by the auth middleware (the bouncer)
   res.json({
-    _id: req.user._id,
-    name: req.user.name,
-    email: req.user.email,
+    user: {
+      _id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+    }
   });
 };

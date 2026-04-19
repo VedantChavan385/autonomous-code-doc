@@ -26,6 +26,9 @@ export function useSocket() {
 
     socketRef.current.on('connect', () => {
       console.log('Connected to WebSocket server');
+      if (selectedProject?._id) {
+        socketRef.current.emit('join_project_room', selectedProject._id);
+      }
     });
 
     // Listen for project status updates

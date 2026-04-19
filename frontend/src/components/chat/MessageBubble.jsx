@@ -80,10 +80,10 @@ export function MessageBubble({ message }) {
                 <div 
                   key={i}
                   className="group flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-2 transition-all cursor-pointer"
-                  title={source.snippet}
+                  title={source.snippet || source.code_snippet}
                 >
                   <span className="text-xs font-mono text-accent-end max-w-[150px] truncate">
-                    {source.file.split('/').pop()}
+                    {(source.file || `Snippet-${i+1}`).split('/').pop()}
                   </span>
                   {source.line !== undefined && (
                     <span className="text-[10px] text-slate-500 font-mono">L{source.line}</span>
