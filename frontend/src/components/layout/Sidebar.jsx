@@ -4,9 +4,7 @@ import {
   LayoutDashboard, 
   Settings, 
   LogOut, 
-  Code2,
-  ChevronRight,
-  Github
+  Code2
 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import { cn } from '../../utils/cn';

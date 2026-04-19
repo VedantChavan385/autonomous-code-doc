@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { 
   ArrowLeft, 
-  Github, 
+  GitBranch, 
   MessageSquare, 
   FileText, 
   Trash2, 
@@ -98,7 +98,7 @@ export default function ProjectDetail() {
             </div>
 
             <div className="flex items-center gap-2 text-slate-400 group">
-              <Github className="h-5 w-5" />
+              <GitBranch className="h-5 w-5" />
               <a 
                 href={selectedProject.repoUrl} 
                 target="_blank" 

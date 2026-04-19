@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Github, Plus, X } from 'lucide-react';
+import { GitBranch, Plus, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Modal } from '../ui/Modal';
 import { Input } from '../ui/Input';
@@ -52,7 +52,7 @@ export function AddRepoModal({ isOpen, onClose }) {
           <Input
             label="GitHub Repository URL"
             placeholder="https://github.com/user/repo"
-            icon={Github}
+            icon={GitBranch}
             value={repoUrl}
             onChange={(e) => setRepoUrl(e.target.value)}
             required

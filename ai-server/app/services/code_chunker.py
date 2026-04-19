@@ -1,61 +1,48 @@
-from langchain_text_splitters import Language, RecursiveCharacterTextSplitter
 import os
 
-def chunk_code(file_data, chunk_size=400, overlap=100):
+# Simple character-based chunker — no external dependencies needed.
+# Works perfectly for embedding purposes.
+
+def chunk_code(file_data, chunk_size=400, overlap=80):
     """
-    Intelligently chunks code files based on their programming language
-    to avoid splitting functions/classes in half when possible.
+    Splits code files into overlapping text chunks for embedding.
+    Uses a simple sliding window approach keyed to newlines so we
+    don't break in the middle of a line.
     """
     all_chunks = []
-
-    # Map file extensions to Langchain Language enums
-    language_map = {
-        ".py": Language.PYTHON,
-        ".js": Language.JS,
-        ".ts": Language.TS,
-        ".java": Language.JAVA,
-        ".cpp": Language.CPP,
-        ".c": Language.C,
-        ".cs": Language.CSHARP,
-        ".go": Language.GO,
-        ".rs": Language.RUST,
-        ".rb": Language.RUBY,
-        ".php": Language.PHP,
-        ".html": Language.HTML
-    }
-
-    # Fallback generic splitter 
-    generic_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size,
-        chunk_overlap=overlap
-    )
 
     for file in file_data:
         content = file["content"]
         file_path = file["file_path"]
         
-        # Determine language from extension
-        _, ext = os.path.splitext(file_path)
-        lang = language_map.get(ext.lower())
+        lines = content.splitlines(keepends=True)
+        
+        current_chunk_lines = []
+        current_len = 0
 
-        if lang:
-            try:
-                splitter = RecursiveCharacterTextSplitter.from_language(
-                    language=lang,
-                    chunk_size=chunk_size,
-                    chunk_overlap=overlap
-                )
-                texts = splitter.split_text(content)
-            except Exception:
-                # If tree-sitter or langchain fails for a specific language, fallback
-                texts = generic_splitter.split_text(content)
-        else:
-            texts = generic_splitter.split_text(content)
+        for line in lines:
+            current_chunk_lines.append(line)
+            current_len += len(line)
 
-        for text in texts:
-            all_chunks.append({
-                "file_path": file_path,
-                "chunk": text
-            })
+            if current_len >= chunk_size:
+                chunk_text = "".join(current_chunk_lines).strip()
+                if chunk_text:
+                    all_chunks.append({
+                        "file_path": file_path,
+                        "chunk": chunk_text
+                    })
+                # Keep last `overlap` characters worth of lines for context
+                overlap_text = chunk_text[-overlap:] if len(chunk_text) > overlap else chunk_text
+                current_chunk_lines = [overlap_text]
+                current_len = len(overlap_text)
+
+        # Flush remaining lines
+        if current_chunk_lines:
+            chunk_text = "".join(current_chunk_lines).strip()
+            if chunk_text:
+                all_chunks.append({
+                    "file_path": file_path,
+                    "chunk": chunk_text
+                })
 
     return all_chunks

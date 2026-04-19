@@ -30,8 +30,9 @@ const worker = new Worker('repo-processing', async (job) => {
     console.log(`✅ Success processing project ${projectId}!`);
 
     // ✨ NEW: Shout out to anyone listening in this project's radio room!
+    // ✨ Standardized event name to match frontend
     const io = getIO();
-    io.to(projectId.toString()).emit('project_status_update', {
+    io.to(projectId.toString()).emit('project_status_updated', {
       projectId,
       status: 'ready',
       fileCount: aiData.file_count,
@@ -46,9 +47,8 @@ const worker = new Worker('repo-processing', async (job) => {
       errorMessage: error.response?.data?.detail || error.message,
     });
 
-    // ✨ NEW: Send the failure message over the radio too
     const io = getIO();
-    io.to(projectId.toString()).emit('project_status_update', {
+    io.to(projectId.toString()).emit('project_status_updated', {
       projectId,
       status: 'failed',
       errorMessage: error.response?.data?.detail || error.message,

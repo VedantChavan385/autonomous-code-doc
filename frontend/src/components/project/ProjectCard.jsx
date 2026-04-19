@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Github, FileCode2, Layers, Clock, ArrowUpRight } from 'lucide-react';
+import { GitBranch, FileCode2, Layers, Clock, ArrowUpRight } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { StatusBadge } from './StatusBadge';
 
@@ -19,7 +19,7 @@ export function ProjectCard({ project }) {
 
       <div className="flex justify-between items-start mb-4">
         <div className="p-2.5 rounded-lg bg-white/5 border border-white/5 group-hover:border-accent-end/20 group-hover:bg-accent-end/5 transition-colors">
-          <Github className="h-6 w-6 text-slate-300 group-hover:text-accent-end transition-colors" />
+          <GitBranch className="h-6 w-6 text-slate-300 group-hover:text-accent-end transition-colors" />
         </div>
         <StatusBadge status={project.status} />
       </div>
