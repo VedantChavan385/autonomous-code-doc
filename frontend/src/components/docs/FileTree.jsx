@@ -9,19 +9,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
-export function FileTree({ projects, onFileSelect, activeFile }) {
-  // Simple Mock File Tree for MVP
-  const tree = [
-    { name: 'src', type: 'folder', children: [
-        { name: 'app.js', type: 'file' },
-        { name: 'auth', type: 'folder', children: [
-            { name: 'login.js', type: 'file' },
-            { name: 'register.js', type: 'file' }
-        ]}
-    ]},
-    { name: 'package.json', type: 'file' },
-    { name: 'README.md', type: 'file' }
-  ];
+export function FileTree({ tree = [], onFileSelect, activeFile }) {
 
   const renderNode = (node, depth = 0) => {
     const isFolder = node.type === 'folder';
@@ -30,7 +18,7 @@ export function FileTree({ projects, onFileSelect, activeFile }) {
     return (
       <div key={node.name} style={{ paddingLeft: `${depth * 12}px` }}>
         <button 
-          onClick={() => !isFolder && onFileSelect(node.name)}
+          onClick={() => !isFolder && onFileSelect(node.path)}
           className={cn(
             "w-full flex items-center gap-2 py-1.5 px-3 rounded-lg text-sm transition-all text-left",
             isActive ? "bg-accent-end/10 text-white" : "text-slate-400 hover:text-slate-200 hover:bg-white/5"

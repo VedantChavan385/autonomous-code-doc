@@ -2,13 +2,16 @@ import os
 
 #filter codes by file extensions
 
-SUPPORTED_EXTENSIONS = [".py", ".js", ".ts", ".java", ".cpp"]
+SUPPORTED_EXTENSIONS = [".py", ".js", ".ts", ".jsx", ".tsx", ".java", ".cpp"]
 IGNORE_DIRS = ["node_modules", ".git", "venv", "__pycache__"]
 
-def is_valid_file(file_name):
-    return any(file_name.endswith(ext) for ext in SUPPORTED_EXTENSIONS)
+def is_valid_file(file_name, supported_extensions):
+    return any(file_name.endswith(ext) for ext in supported_extensions)
 
-def parse_repo(repo_path):
+def parse_repo(repo_path, file_extensions=None):
+    if file_extensions is None:
+        file_extensions = SUPPORTED_EXTENSIONS
+        
     #READS ALL FILES
     code_files = []
 
@@ -17,7 +20,7 @@ def parse_repo(repo_path):
         dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
 
         for file in files:
-            if is_valid_file(file):
+            if is_valid_file(file, file_extensions):
                 file_path = os.path.join(root, file)
 
                 try:

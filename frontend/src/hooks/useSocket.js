@@ -55,5 +55,6 @@ export function useSocket() {
     };
   }, [token, isAuthenticated, fetchProjects, fetchProject, selectedProject]);
 
+  // eslint-disable-next-line react-hooks/refs
   return socketRef.current;
 }

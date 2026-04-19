@@ -24,5 +24,11 @@ export const projectApi = {
   getDocs: async (id) => {
     const response = await apiClient.get(`/projects/${id}/docs`);
     return response.data;
+  },
+
+  generateDocs: async (id) => {
+    // Generates docs on the AI server synchronously (could take a while)
+    const response = await apiClient.post(`/projects/${id}/docs/generate`);
+    return response.data;
   }
 };
