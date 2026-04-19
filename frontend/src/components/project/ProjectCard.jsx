@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GitBranch, FileCode2, Layers, Clock, ArrowUpRight } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { StatusBadge } from './StatusBadge';
 
@@ -10,46 +9,33 @@ export function ProjectCard({ project }) {
   return (
     <Card 
       onClick={() => navigate(`/projects/${project._id}`)}
-      className="group cursor-pointer hover:border-accent-end/30 transition-all hover:shadow-2xl hover:shadow-accent-end/5 relative overflow-hidden"
+      className="group cursor-pointer hover:-translate-y-1 transition-transform relative overflow-hidden"
     >
-      {/* Hover gradient effect */}
-      <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-        <ArrowUpRight className="h-5 w-5 text-accent-end" />
-      </div>
-
-      <div className="flex justify-between items-start mb-4">
-        <div className="p-2.5 rounded-lg bg-white/5 border border-white/5 group-hover:border-accent-end/20 group-hover:bg-accent-end/5 transition-colors">
-          <GitBranch className="h-6 w-6 text-slate-300 group-hover:text-accent-end transition-colors" />
+      <div className="flex justify-between items-start mb-6">
+        <div className="flex flex-col min-w-0 pr-4">
+          <p className="text-[10px] text-slate-500 font-mono truncate mb-1">
+            {project.repoUrl.replace('https://github.com/', '').replace('http://github.com/', '')}
+          </p>
+          <h3 className="text-2xl font-black text-[#1a1a1a] truncate">
+            {project.name}
+          </h3>
         </div>
         <StatusBadge status={project.status} />
       </div>
 
-      <h3 className="text-lg font-bold text-white mb-1 group-hover:text-accent-end transition-colors truncate">
-        {project.name}
-      </h3>
-      
-      <p className="text-xs text-slate-500 mb-6 font-mono truncate">
-        {project.repoUrl}
-      </p>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex items-center gap-2 text-slate-400">
-          <FileCode2 className="h-4 w-4 text-slate-500" />
-          <span className="text-sm">{project.fileCount || 0} Files</span>
-        </div>
-        <div className="flex items-center gap-2 text-slate-400">
-          <Layers className="h-4 w-4 text-slate-500" />
-          <span className="text-sm">{project.chunkCount || 0} Chunks</span>
-        </div>
+      <div className="flex flex-wrap gap-2 mb-8">
+        {(project.file_extensions || ['.js', '.jsx', '.ts', '.tsx', '.py']).map((ext) => (
+           <span key={ext} className="mono-label px-2 py-1 border-[1.5px] border-[#1a1a1a] rounded-full text-[10px] bg-white">
+             {ext}
+           </span>
+        ))}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
-        <div className="flex items-center gap-1">
-          <Clock className="h-3 w-3" />
-          <span>Updated {new Date(project.updatedAt || project.createdAt).toLocaleDateString()}</span>
-        </div>
-        <div className="px-2 py-0.5 rounded bg-white/5 uppercase tracking-wider font-bold">
-          {project.language || 'Code'}
+      <div className="pt-4 border-t-2 border-[#1a1a1a]/10 flex items-center justify-between text-[11px] font-mono font-bold text-slate-500 uppercase tracking-widest">
+        <div className="flex items-center gap-2">
+          <span>{project.fileCount || 0} files</span>
+          <span className="opacity-50">•</span>
+          <span>{project.chunkCount || 0} chunks</span>
         </div>
       </div>
     </Card>

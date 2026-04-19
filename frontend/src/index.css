@@ -1,19 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #0a0a14;
-  --color-bg-card: rgba(255, 255, 255, 0.05);
-  --color-accent-start: #7c3aed;
-  --color-accent-end: #3b82f6;
-  --color-text-primary: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-success: #22c55e;
-  --color-warning: #eab308;
-  --color-error: #ef4444;
+  --color-bg-primary: #fdfbf7;
+  --color-bg-card: #ffffff;
+  --color-accent-start: #f7b38d;
+  --color-accent-end: #e3dff4;
+  --color-accent-yellow: #efc96a;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b7280;
+  --color-success: #a7f3d0;
+  --color-warning: #fde047;
+  --color-error: #fca5a5;
+  --color-border-heavy: #1a1a1a;
 }
 
 /* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 html, body {
   margin: 0;
@@ -22,18 +24,21 @@ html, body {
   color: var(--color-text-primary);
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
+  /* subtle dot pattern for background */
+  background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.glass-card {
+.editorial-card {
   background: var(--color-bg-card);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--color-border-heavy);
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 var(--color-border-heavy);
 }
 
-.text-gradient {
-  background: linear-gradient(to right, var(--color-accent-start), var(--color-accent-end));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.mono-label {
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
 }

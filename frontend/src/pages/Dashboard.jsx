@@ -22,28 +22,30 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
-        <div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">Main Dashboard</h1>
-          <p className="text-slate-400 mt-1">Manage and explore your documented repositories.</p>
+      {projects.length > 0 && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
+          <div>
+            <h1 className="text-4xl font-black text-[#1a1a1a] tracking-tight">Main Dashboard</h1>
+            <p className="text-slate-500 mt-1 font-medium">Manage and explore your documented repositories.</p>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={fetchProjects}
+              className="h-12 bg-white border-2 border-[#1a1a1a] shadow-[2px_2px_0_#1a1a1a] hover:bg-slate-50"
+              disabled={isLoading}
+            >
+              <RefreshCw className={isLoading ? "animate-spin h-4 w-4 text-[#1a1a1a]" : "h-4 w-4 text-[#1a1a1a]"} />
+            </Button>
+            <Button size="md" onClick={() => setIsModalOpen(true)} className="h-12 shadow-[4px_4px_0_#1a1a1a]">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Repository
+            </Button>
+          </div>
         </div>
-        
-        <div className="flex items-center gap-3">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={fetchProjects}
-            className="h-10"
-            disabled={isLoading}
-          >
-            <RefreshCw className={isLoading ? "animate-spin h-4 w-4" : "h-4 w-4"} />
-          </Button>
-          <Button size="md" onClick={() => setIsModalOpen(true)} className="h-10">
-            <Plus className="mr-2 h-4 w-4" />
-            Add Repository
-          </Button>
-        </div>
-      </div>
+      )}
 
       {isLoading && projects.length === 0 ? (
         <div className="flex items-center justify-center py-32">
@@ -52,7 +54,9 @@ export default function Dashboard() {
       ) : filteredProjects.length > 0 ? (
         <ProjectGrid projects={filteredProjects} />
       ) : (
-        <EmptyState onAdd={() => setIsModalOpen(true)} />
+        <div className="py-8">
+          <EmptyState onAdd={() => setIsModalOpen(true)} />
+        </div>
       )}
 
       <AddRepoModal 

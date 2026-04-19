@@ -5,7 +5,7 @@ export function Card({ className, children, ...props }) {
   return (
     <div
       className={cn(
-        "glass-card rounded-xl p-6 text-slate-100 shadow-xl",
+        "editorial-card p-6 text-[var(--color-text-primary)] transition-all",
         className
       )}
       {...props}

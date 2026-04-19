@@ -11,7 +11,7 @@ export function Spinner({ className, size = 'md', ...props }) {
   return (
     <div
       className={cn(
-        "animate-spin rounded-full border-t-transparent border-accent-end",
+        "animate-spin rounded-full border-t-transparent border-[#1a1a1a]",
         sizes[size],
         className
       )}

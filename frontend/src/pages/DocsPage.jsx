@@ -73,7 +73,7 @@ export default function DocsPage() {
 
   if (!selectedProject) {
     return (
-      <div className="h-screen bg-[#0a0a14] flex items-center justify-center">
+      <div className="h-screen bg-[var(--color-bg-primary)] flex items-center justify-center">
         <Spinner size="lg" />
       </div>
     );
@@ -81,32 +81,31 @@ export default function DocsPage() {
 
   return (
     <DashboardLayout>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-8 border-b-2 border-[#1a1a1a] pb-6">
         <div className="flex items-center gap-4">
           <Link 
             to={`/projects/${id}`} 
-            className="flex items-center text-slate-500 hover:text-white transition-colors"
+            className="h-10 w-10 flex items-center justify-center rounded-xl bg-white border-2 border-[#1a1a1a] shadow-[2px_2px_0_#1a1a1a] hover:bg-slate-50 transition-colors"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5 text-[#1a1a1a]" />
           </Link>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">Code Documentation</h1>
+          <h1 className="text-4xl font-black text-[#1a1a1a] tracking-tight">Code Documentation</h1>
         </div>
 
         <Button 
-          variant="outline" 
-          size="sm" 
           onClick={handleRegenerate} 
           isLoading={isGenerating}
+          className="shadow-[4px_4px_0_#1a1a1a]"
         >
           <RefreshCw className={cn("h-4 w-4 mr-2", isGenerating && "animate-spin")} />
           Regenerate Docs
         </Button>
       </div>
 
-      <div className="flex gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-8 items-start">
         {/* Sidebar: File Tree */}
-        <aside className="w-72 sticky top-24">
-          <Card className="p-4 bg-slate-900/30 border-white/5">
+        <aside className="w-full lg:w-72 lg:sticky lg:top-24">
+          <Card className="p-4 bg-white shadow-[4px_4px_0_#1a1a1a]">
             <FileTree 
               tree={treeData}
               activeFile={activeFile} 
@@ -116,56 +115,56 @@ export default function DocsPage() {
         </aside>
 
         {/* Main: Documentation Content */}
-        <main className="flex-1 min-w-0 pb-20">
-          <Card className="p-0 overflow-hidden border-white/10 shadow-2xl">
+        <main className="flex-1 min-w-0 pb-20 w-full">
+          <Card className="p-0 overflow-hidden shadow-[4px_4px_0_#1a1a1a] bg-white">
             {/* Header / Breadcrumb */}
-            <div className="bg-white/[0.03] px-8 py-4 border-b border-white/5 flex items-center gap-3">
-              <FileCode className="h-5 w-5 text-accent-end" />
-              <div className="flex items-center text-sm font-mono text-slate-400">
-                <span className="text-white font-bold">{activeFile || 'No file selected'}</span>
+            <div className="bg-slate-50 px-8 py-4 border-b-2 border-[#1a1a1a] flex items-center gap-3">
+              <FileCode className="h-5 w-5 text-accent-start" />
+              <div className="flex items-center text-sm font-black text-[#1a1a1a] uppercase tracking-widest break-all">
+                <span>{activeFile || 'No file selected'}</span>
               </div>
             </div>
 
             {activeFile && currentDoc ? (
-            <div className="p-10">
+            <div className="p-6 md:p-10">
               {/* Module Summary */}
               <section className="mb-12">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                  <Box className="h-6 w-6 text-accent-start" />
+                <h2 className="text-3xl font-black text-[#1a1a1a] mb-6 flex items-center gap-3">
+                  <Box className="h-8 w-8 text-accent-start" />
                   Module Overview
                 </h2>
-                <div className="prose prose-invert prose-slate max-w-none text-slate-400 leading-relaxed">
+                <div className="prose prose-slate max-w-none text-slate-600 font-medium leading-relaxed prose-headings:text-[#1a1a1a] prose-strong:text-[#1a1a1a] prose-a:text-accent-start">
                   <ReactMarkdown>{currentDoc?.summary || 'No summary available.'}</ReactMarkdown>
                 </div>
               </section>
 
               {/* Functions Documentation */}
               <section className="mb-12">
-                <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                  <FunctionSquare className="h-6 w-6 text-blue-500" />
+                <h2 className="text-3xl font-black text-[#1a1a1a] mb-8 flex items-center gap-3">
+                  <FunctionSquare className="h-8 w-8 text-accent-cool" />
                   Defined Functions
                 </h2>
                 
                 <div className="space-y-6">
                   {currentDoc?.functions && currentDoc.functions.length > 0 ? currentDoc.functions.map((fn, idx) => (
-                    <div key={idx} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.04] transition-colors">
+                    <div key={idx} className="bg-white border-2 border-[#1a1a1a] rounded-2xl p-6 hover:shadow-[4px_4px_0_#1a1a1a] transition-shadow">
                       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-                        <code className="text-lg font-bold text-accent-end bg-accent-end/10 px-3 py-1 rounded-lg">
+                        <code className="text-sm font-black text-[#1a1a1a] bg-accent-cool px-3 py-1.5 border-2 border-[#1a1a1a] rounded-lg">
                           {fn.name}({fn.params})
                         </code>
                       </div>
-                      <p className="text-slate-400 text-sm mb-6 leading-relaxed">
+                      <p className="text-slate-600 font-medium text-sm mb-6 leading-relaxed">
                         {fn.description}
                       </p>
                       
                       {fn.code && fn.code.trim() !== "" && (
-                        <div className="bg-[#0f0f1a] rounded-xl overflow-hidden border border-white/5">
-                           <div className="px-4 py-2 border-b border-white/5 flex items-center justify-between">
+                        <div className="bg-[#1e1e1e] rounded-xl overflow-hidden border-2 border-[#1a1a1a] shadow-[2px_2px_0_#1a1a1a] mt-4">
+                           <div className="bg-accent-cool px-4 py-2 border-b-2 border-[#1a1a1a] flex items-center justify-between">
                               <div className="flex items-center gap-2">
-                                <Terminal className="h-3 w-3 text-slate-500" />
-                                <span className="text-[10px] text-slate-500 uppercase font-bold">Implementation</span>
+                                <Terminal className="h-4 w-4 text-[#1a1a1a]" />
+                                <span className="text-[10px] text-[#1a1a1a] uppercase font-black tracking-widest">Implementation</span>
                               </div>
-                              <Copy className="h-3 w-3 text-slate-600 hover:text-slate-400 cursor-pointer" />
+                              <Copy className="h-4 w-4 text-[#1a1a1a] hover:text-slate-500 cursor-pointer transition-colors" />
                            </div>
                            <SyntaxHighlighter
                               children={fn.code}
@@ -189,25 +188,25 @@ export default function DocsPage() {
 
               {/* Dependencies */}
               <section>
-                <h2 className="text-2xl font-bold text-white mb-6">Dependencies</h2>
+                <h2 className="text-3xl font-black text-[#1a1a1a] mb-6">Dependencies</h2>
                 <div className="flex flex-wrap gap-2">
                   {currentDoc?.dependencies && currentDoc.dependencies.length > 0 ? (
                     currentDoc.dependencies.map((dep, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-white/5 border border-white/5 rounded-lg text-xs text-slate-400 font-mono">
+                      <span key={idx} className="mono-label px-3 py-1.5 bg-slate-50 border-[1.5px] border-[#1a1a1a] rounded-full text-[10px] text-[#1a1a1a]">
                         {dep}
                       </span>
                     ))
                   ) : (
-                    <span className="text-slate-500 italic">No dependencies found.</span>
+                    <span className="text-slate-500 font-medium">No dependencies found.</span>
                   )}
                 </div>
               </section>
             </div>
             ) : (
-              <div className="p-20 text-center flex flex-col items-center justify-center">
-                <Box className="h-16 w-16 text-slate-700 mb-6" />
-                <h3 className="text-xl font-bold text-white mb-2">No Documentation Selected</h3>
-                <p className="text-slate-500">
+              <div className="p-20 text-center flex flex-col items-center justify-center bg-slate-50">
+                <Box className="h-16 w-16 text-slate-300 mb-6" />
+                <h3 className="text-3xl font-black text-[#1a1a1a] mb-2">No Documentation Selected</h3>
+                <p className="text-slate-500 font-medium">
                   {treeData.length === 0 
                     ? "It looks like documentation hasn't been generated yet. Click 'Regenerate Docs' to analyze this repository."
                     : "Select a file from the repository structure on the left to view its documentation."}

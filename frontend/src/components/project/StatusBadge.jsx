@@ -14,7 +14,7 @@ export function StatusBadge({ status }) {
   return (
     <Badge 
       variant={variant} 
-      className={animate ? "animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.2)]" : ""}
+      className={animate ? "animate-pulse shadow-[0_0_8px_rgba(253,224,71,0.5)]" : ""}
     >
       {label}
     </Badge>

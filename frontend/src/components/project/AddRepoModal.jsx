@@ -64,16 +64,16 @@ export function AddRepoModal({ isOpen, onClose }) {
             onChange={(e) => setProjectName(e.target.value)}
           />
           
-          <div className="bg-white/5 border border-white/5 rounded-lg p-4">
-            <p className="text-xs text-slate-400 mb-2 font-medium uppercase tracking-wider">Default Extensions</p>
+          <div className="bg-slate-50 border-2 border-[#1a1a1a] rounded-xl p-4 shadow-[2px_2px_0_#1a1a1a]">
+            <p className="text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-widest">Default Extensions</p>
             <div className="flex flex-wrap gap-2">
               {['.js', '.py', '.jsx', '.tsx', '.ts'].map(ext => (
-                <span key={ext} className="px-2 py-1 rounded bg-white/10 text-[10px] text-slate-300 font-mono">
+                <span key={ext} className="mono-label px-2 py-1 rounded-full border-[1.5px] border-[#1a1a1a] bg-white text-[10px] text-[#1a1a1a]">
                   {ext}
                 </span>
               ))}
             </div>
-            <p className="text-[10px] text-slate-500 mt-3 italic">
+            <p className="text-[10px] text-slate-500 mt-3 font-medium">
               These files will be parsed during ingestion.
             </p>
           </div>

@@ -48,11 +48,11 @@ export default function Register() {
   return (
     <AuthLayout>
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-white tracking-tight">Create account</h2>
-        <p className="text-slate-400 mt-2">Start documenting your codebase with AI</p>
+        <h2 className="text-4xl font-black text-[#1a1a1a] tracking-tight">Create account</h2>
+        <p className="text-slate-500 mt-3 font-medium">Start documenting your codebase with AI</p>
       </div>
 
-      <Card className="p-8 border border-white/10 bg-white/5 backdrop-blur-xl">
+      <Card className="p-8">
         <form onSubmit={handleSubmit} className="space-y-5">
           <Input
             label="Full Name"
@@ -96,9 +96,9 @@ export default function Register() {
           </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <p className="mt-6 text-center text-sm font-medium text-slate-600">
           Already have an account?{' '}
-          <Link to="/login" className="font-semibold text-white hover:text-accent-end transition-colors">
+          <Link to="/login" className="font-bold text-[#1a1a1a] hover:text-accent-yellow transition-colors underline decoration-2 underline-offset-2">
             Sign in
           </Link>
         </p>

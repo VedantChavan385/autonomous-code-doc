@@ -3,18 +3,15 @@ import { BrandPanel } from './BrandPanel';
 
 export function AuthLayout({ children }) {
   return (
-    <div className="min-h-screen bg-[#0a0a14] flex">
+    <div className="min-h-screen bg-[var(--color-bg-primary)] flex">
       {/* Left panel hidden on small screens */}
-      <div className="hidden lg:flex lg:w-1/2">
+      <div className="hidden lg:flex lg:w-1/2 border-r-2 border-[#1a1a1a]">
         <BrandPanel />
       </div>
       
       {/* Right panel (Form) */}
-      <div className="flex w-full lg:w-1/2 items-center justify-center p-8 sm:p-12 relative">
-        {/* Mobile decorative background */}
-        <div className="absolute inset-0 lg:hidden overflow-hidden pointer-events-none">
-          <div className="absolute top-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-accent-start/10 blur-[120px]" />
-        </div>
+      <div className="flex w-full lg:w-1/2 items-center justify-center p-8 sm:p-12 relative bg-white">
+        <div className="absolute inset-0 lg:hidden pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
         
         <div className="w-full max-w-md relative z-10">
           {children}

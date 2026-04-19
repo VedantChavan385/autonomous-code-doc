@@ -15,34 +15,32 @@ export function ChatInput({ onSend, isLoading }) {
   };
 
   return (
-    <div className="bg-slate-900/60 backdrop-blur-xl border-t border-white/5 p-6 pb-8">
+    <div className="bg-[var(--color-bg-primary)]/90 backdrop-blur-xl border-t-2 border-[#1a1a1a] p-4 sm:p-6 pb-8">
       <form 
         onSubmit={handleSubmit}
         className="max-w-4xl mx-auto relative group"
       >
-        <div className="absolute -inset-1 bg-gradient-to-r from-accent-start/20 to-accent-end/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-500" />
-        
-        <div className="relative flex items-center gap-2 bg-[#0d0d17] border border-white/10 rounded-2xl p-2 pl-4 shadow-2xl">
-          <Sparkles className="h-5 w-5 text-slate-500 shrink-0" />
+        <div className="relative flex items-center gap-3 bg-white border-2 border-[#1a1a1a] rounded-2xl p-2 pl-5 shadow-[4px_4px_0_#1a1a1a] focus-within:translate-y-[2px] focus-within:translate-x-[2px] focus-within:shadow-[2px_2px_0_#1a1a1a] transition-all">
+          <Sparkles className="h-6 w-6 text-accent-start shrink-0" />
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading}
             placeholder="Ask anything about the codebase..."
-            className="flex-1 bg-transparent border-none text-white text-sm outline-none placeholder:text-slate-600 py-3"
+            className="flex-1 bg-transparent border-none text-[#1a1a1a] text-lg font-medium outline-none placeholder:text-slate-400 py-3"
           />
           <Button 
             type="submit" 
             isLoading={isLoading}
             disabled={!input.trim()}
-            className="rounded-xl h-11 px-5 shadow-lg shadow-accent-end/10"
+            className="rounded-xl h-12 px-6"
           >
-            <Send className="h-4 w-4" />
+            <Send className="h-5 w-5" />
           </Button>
         </div>
         
-        <p className="mt-3 text-[10px] text-slate-600 text-center uppercase tracking-widest font-bold">
+        <p className="mt-4 text-[10px] text-slate-500 text-center uppercase tracking-widest font-bold">
           CodeDoc AI is grounded in your uploaded source files
         </p>
       </form>

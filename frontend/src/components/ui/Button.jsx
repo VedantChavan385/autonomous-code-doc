@@ -2,14 +2,14 @@ import React from 'react';
 import { cn } from '../../utils/cn';
 
 export const Button = React.forwardRef(({ className, variant = 'primary', size = 'md', isLoading = false, children, ...props }, ref) => {
-  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-[#0a0a14] focus-visible:ring-blue-500';
+  const baseStyles = 'inline-flex items-center justify-center rounded-xl font-bold transition-all focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50 disabled:pointer-events-none border-2 border-transparent';
   
   const variants = {
-    primary: 'bg-gradient-to-r from-accent-start to-accent-end text-white hover:opacity-90 shadow-[0_0_15px_rgba(124,58,237,0.3)]',
-    secondary: 'bg-white/10 text-white hover:bg-white/20',
-    outline: 'border border-white/20 bg-transparent hover:bg-white/10 text-white',
-    ghost: 'hover:bg-white/10 text-slate-300 hover:text-white',
-    danger: 'bg-error/80 text-white hover:bg-error',
+    primary: 'bg-accent-yellow border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-accent-yellow shadow-[2px_2px_0_#1a1a1a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none',
+    secondary: 'bg-white border-[#1a1a1a] text-[#1a1a1a] hover:bg-slate-50 shadow-[2px_2px_0_#1a1a1a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none',
+    outline: 'border-[#1a1a1a] bg-transparent text-[#1a1a1a] hover:bg-black/5 active:translate-x-[1px] active:translate-y-[1px]',
+    ghost: 'hover:bg-black/5 text-text-secondary hover:text-text-primary',
+    danger: 'bg-error border-[#1a1a1a] text-[#1a1a1a] hover:bg-red-400 shadow-[2px_2px_0_#1a1a1a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none',
   };
   
   const sizes = {

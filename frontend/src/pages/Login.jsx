@@ -43,11 +43,11 @@ export default function Login() {
   return (
     <AuthLayout>
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-white tracking-tight">Sign in</h2>
-        <p className="text-slate-400 mt-2">Welcome back to CodeDoc AI</p>
+        <h2 className="text-4xl font-black text-[#1a1a1a] tracking-tight">Sign in</h2>
+        <p className="text-slate-500 mt-3 font-medium">Welcome back to codebase.docs</p>
       </div>
 
-      <Card className="p-8 border border-white/10 bg-white/5 backdrop-blur-xl">
+      <Card className="p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <Input
             label="Email address"
@@ -63,8 +63,8 @@ export default function Login() {
 
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <label className="block text-sm font-medium text-slate-300">Password</label>
-              <a href="#" className="text-sm text-accent-end hover:text-accent-start transition-colors">
+              <label className="block text-sm font-bold text-slate-700">Password</label>
+              <a href="#" className="text-sm font-bold text-slate-500 hover:text-[#1a1a1a] transition-colors underline decoration-2 underline-offset-2">
                 Forgot password?
               </a>
             </div>
@@ -86,9 +86,9 @@ export default function Login() {
           </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <p className="mt-6 text-center text-sm font-medium text-slate-600">
           Don't have an account?{' '}
-          <Link to="/register" className="font-semibold text-white hover:text-accent-end transition-colors">
+          <Link to="/register" className="font-bold text-[#1a1a1a] hover:text-accent-yellow transition-colors underline decoration-2 underline-offset-2">
             Create an account
           </Link>
         </p>

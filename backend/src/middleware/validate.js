@@ -7,9 +7,16 @@ export const validate = (schema) => (req, res, next) => {
     });
     next();
   } catch (error) {
+    let parsedErrors;
+    try {
+      parsedErrors = error.errors || error.issues || JSON.parse(error.message);
+    } catch {
+      parsedErrors = error.message;
+    }
+    
     return res.status(400).json({
       message: 'Validation failed',
-      errors: error.errors
+      errors: parsedErrors
     });
   }
 };

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests"
   },
   "dependencies": {
     "axios": "^1.15.0",
@@ -25,6 +25,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "cross-env": "^10.1.0",
+    "jest": "^30.3.0",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.2.2"
   }
 }
