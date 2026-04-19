@@ -3,15 +3,13 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import ProjectDetail from './pages/ProjectDetail';
+import ChatPage from './pages/ChatPage';
+import DocsPage from './pages/DocsPage';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useAuthStore } from './stores/authStore';
 import { authApi } from './api/auth.api';
-
-// Placeholder empty components so routing works immediately
-const Dashboard = () => <div className="text-white p-8">Dashboard coming soon...</div>;
-const ProjectDetail = () => <div className="text-white p-8">Project Detail coming soon...</div>;
-const ChatPage = () => <div className="text-white p-8">Chat coming soon...</div>;
-const DocsPage = () => <div className="text-white p-8">Docs Viewer coming soon...</div>;
 
 function App() {
   const { isAuthenticated, setAuth, logout, token } = useAuthStore();
