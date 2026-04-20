@@ -52,11 +52,11 @@ export function HeroSection({ onIngest }) {
                </Button>
              </form>
              
-             <div className="mt-6 flex flex-wrap items-center gap-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+             {/* <div className="mt-6 flex flex-wrap items-center gap-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                <span>Try:</span>
                <button onClick={() => setUrl('https://github.com/tiangolo/fastapi')} className="hover:text-[#1a1a1a] underline underline-offset-4 decoration-2">fastapi</button>
                <button onClick={() => setUrl('https://github.com/expressjs/express')} className="hover:text-[#1a1a1a] underline underline-offset-4 decoration-2">express</button>
-             </div>
+             </div> */}
           </div>
           
           {/* Illustration Container */}
